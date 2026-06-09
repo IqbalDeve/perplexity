@@ -1,0 +1,496 @@
+@media screen and (max-width:1300px) {
+    .overview {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (max-width:1200px) {
+    .main-sec {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+
+
+    .new-york {
+        grid-template-columns: 1fr;
+    }
+
+    .new-york img {
+        height: 370px;
+    }
+
+    .main-sec img {
+        width: 100%;
+    }
+
+    .search img {
+        width: 100%;
+        max-width: 1200px;
+        height: 500px;
+        border-radius: 20px;
+    }
+
+    .h2 {
+        font-size: 40px;
+    }
+
+
+    .box {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .main-sec .main-box {
+        grid-template-columns: 1fr;
+    }
+
+    .main-box img {
+        height: 420px;
+    }
+
+    .blog-sec .blogs {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .main-fot {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .faqs img {
+        width: 500px;
+        height: 350px;
+    }
+
+
+}
+
+@media screen and (max-width: 992px) {
+    .header .navbar {
+        display: none;
+    }
+
+    .help {
+        width: 100%;
+        height: 450px;
+    }
+
+
+    .help {
+        background-image: url(../imgs/faq1.avif);
+        width: 100%;
+    }
+
+    .grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .header .toggle {
+        display: block;
+    }
+
+    .h2 {
+        font-size: 35px;
+    }
+
+    .faqs img {
+        width: 400px;
+        height: 300px;
+    }
+}
+
+@media screen and (max-width:900px) {
+    .h2 {
+        font-size: 38px;
+    }
+
+    .faqs img {
+        width: 100%;
+    }
+
+    .help {
+        width: 100%;
+        height: 420px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .overview {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .desc,
+    span {
+        font-size: 22px;
+    }
+
+    .faqs {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .search img {
+        width: 100%;
+        max-width: 1000px;
+        height: 450px;
+        border-radius: 20px;
+    }
+
+    .green-clr {
+        width: 100%;
+        height: auto;
+    }
+
+    form input {
+        font-size: 18px;
+    }
+
+    .h1 {
+        font-size: 30px;
+    }
+
+    .written {
+        width: 96%;
+    }
+}
+
+
+
+
+
+
+@media screen and (max-width:800px) {
+
+    .help {
+        background-image: url(../imgs/faq1.avif);
+        width: 100%;
+    }
+
+    .help {
+        width: 100%;
+        height: 400px;
+    }
+
+    .blog1-box img {
+        height: 550px;
+    }
+
+    .blog-sec {
+        grid-template-columns: 1fr;
+
+    }
+
+    .green-clr {
+        width: 100%;
+        height: auto;
+    }
+
+    .last {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .h1 {
+        font-size: 28px;
+    }
+
+    .main-desc {
+        font-size: 22px;
+    }
+
+    .copy {
+        font-size: 20px;
+    }
+
+    .h2 {
+        font-size: 30px;
+    }
+
+    form input {
+        font-size: 17px;
+    }
+
+    .written {}
+
+
+    .blog1 {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .blog-sec .blogs {
+        grid-template-columns: 1fr;
+    }
+
+    .main-fot {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .ali {
+        display: none;
+
+    }
+
+    .desc,
+    span {
+        font-size: 20px;
+    }
+
+    .written {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .flex {
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .h4 {
+        font-family: font1;
+        font-size: 20px;
+    }
+
+    .categry .h3 {
+        font-size: 24px;
+    }
+
+    .location .desc {
+        font-size: 21px;
+    }
+
+
+}
+
+@media screen and (max-width:720px) {
+    .main-desc {
+        font-size: 20px;
+    }
+
+    form input {
+        font-size: 16px;
+    }
+
+    .h1 {
+        font-size: 27px;
+    }
+
+
+
+    .help {
+        width: 100%;
+        height: 380px;
+    }
+
+    .overview p {
+        font-size: 18px;
+    }
+
+    .categry .h3 {
+        font-size: 22px;
+    }
+
+    .publish h4 {
+        font-size: 22px;
+        font-weight: 200;
+    }
+
+    .green-clr .h4 {
+        font-family: font1;
+        font-size: 20px;
+    }
+
+
+    .green-clr {
+        width: 100%;
+        height: 740px;
+    }
+
+    .blog1-box img {
+        height: 500px;
+    }
+
+    form input {
+        font-size: 15px;
+    }
+
+    .categry .desc {
+        font-size: 18px;
+    }
+
+    .location .desc {
+        font-size: 19px;
+    }
+
+    .header .logo {
+        width: 170px;
+    }
+
+    .written {
+        width: 90%;
+    }
+
+
+
+}
+
+
+
+
+
+
+@media screen and (max-width:600px) {
+    .main-fot {
+        grid-template-columns: 1fr;
+    }
+
+    .main-desc {
+        font-size: 18px;
+    }
+
+    .blog1 img {
+        border-radius: 10px;
+    }
+
+
+
+    .poxy {
+        font-size: 18px;
+    }
+
+    .read-more {
+
+        padding: 7px 10px;
+    }
+
+    .h1 {
+        font-size: 25px;
+    }
+
+    .main-box img {
+        height: 370px;
+    }
+
+
+    .blog1 img {
+        height: 280px;
+
+    }
+
+
+    .str1 {
+        font-size: 20px;
+    }
+
+    .desc,
+    span {
+        font-size: 16px;
+    }
+
+    .overview p {
+        font-size: 16px;
+    }
+
+    .green-clr .h4 {
+        font-family: font1;
+        font-size: 18px;
+    }
+
+    form input {
+        font-size: 12px;
+    }
+
+    .publish h4 {
+        font-size: 20px;
+    }
+
+    .h5 {
+        font-size: 18px;
+    }
+
+    .categry .desc {
+        font-size: 16px;
+    }
+
+    .location .desc {
+        font-size: 16px;
+    }
+
+    .help {
+        width: 100%;
+        height: 360px;
+    }
+
+    .blog1 {
+        gap: 13px;
+    }
+
+    .categry .h3 {
+        font-size: 21px;
+    }
+
+
+    .faqs .get {
+        padding: 10px 22px;
+
+    }
+
+    label {
+        font-size: 16px;
+    }
+
+    .input,
+    textarea {
+        font-size: 16px;
+    }
+
+
+
+    .h2 {
+        font-size: 23px;
+    }
+
+    .desc,
+    span {
+        font-size: 18px;
+        line-height: 1.45;
+    }
+
+    .green-clr {
+        width: 100%;
+        height: auto;
+    }
+
+    .blog1-box img {
+        height: 380px;
+    }
+
+    .header .toggle {
+        padding: 8px 8px;
+        border: 1px salmon gray;
+    }
+
+    .header .logo {
+        width: 150px;
+    }
+
+    .blog1 .img-box {
+        height: 300px;
+    }
+
+    .written {
+        border-bottom: 2px solid black;
+    }
+
+
+
+}

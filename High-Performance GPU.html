@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>
+ Journey to 3200 Gbps: High-Performance GPU Memory Transfer on AWS Sagemaker Hyperpod     </title>
+    <meta name="description" content="aaaaaa">
+    <meta property="og:title" content="Landing page ">
+    <meta property="og:description" content="Landing page ">
+    <meta property="og:image" content="landing page ">
+    <link rel="shortcut icon" href="imgs/blazing.avif" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/reponsive.css">
+</head>
+
+<body>
+    <!-- header  -->
+        <header class="header" id="header">
+        <a href="index.html">
+            <img class="logo" src="imgs/logo.avif" alt="logo" id="logoim">
+        </a>
+        <nav class="navbar">
+            <ul class="menu">
+                <li>
+                    <a href="/">blog</a>
+                </li>
+                <li>
+                    <a href="carees.html">careers</a>
+                </li>
+                <li>
+                    <a href="helpcenter.html">helps center</a>
+                </li>
+                <li>
+                    <a class="porixy" href="03146399511">try perplexity</a>
+                </li>
+            </ul>
+        </nav>
+
+        <ion-icon class="toggle" onclick="document.getElementById('res-header').style.display = 'block'"
+            name="reorder-four-outline">
+        </ion-icon>
+        <div class="res-header" id="res-header">
+            <div class="justify">
+                <a href="index.html">
+            <img class="logo" src="imgs/logo.avif" alt="logo" id="logoim">
+        </a>
+                <ion-icon name="close-outline"
+                    onclick="document.getElementById('res-header').style.display = 'none'"></ion-icon>
+                </ion-icon>
+            </div>
+            <ul class="res-menu">
+                <li>
+                    <a href="/">blog</a>
+                </li>
+                <li>
+                    <a href="carees.html">careers</a>
+                </li>
+                <li>
+                    <a href="helpcenter.html">helps center</a>
+                </li>
+                <li>
+                    <a class="porixy" href="#">try perplexity</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- blog  -->
+    <section class="blog1-sec">
+        <div class="blog1-box">
+            <img src="imgs/blog7.avif" alt="logo1">
+        </div>
+        <div class="written">
+            <div class="writtenby">
+                <div>
+                    <h4>Written by</h4>
+                    <p>Perplexity Team</p>
+                </div>
+                <div>
+                    <h4>Published on
+
+                    </h4>
+                    <p>Mar 21, 2025
+                    </p>
+                </div>
+            </div>
+            <div class="writtenby">
+                <div class="face">
+                    <ion-icon name="logo-facebook"></ion-icon>
+
+                </div>
+                <div class="tele">
+                    <ion-icon name="call-outline"></ion-icon>
+
+                </div>
+            </div>
+        </div>
+        <div class="america black">
+            <h2 class="h2">
+                Journey to 3200 Gbps: High-Performance GPU Memory Transfer on AWS Sagemaker Hyperpod </h2>
+            <p class="desc">Modern deep learning infrastructure often requires transferring large amounts of data
+                between GPUs across machines. At Perplexity, we encountered a unique technical challenge: efficiently
+                transferring non-contiguous GPU memory regions between machines at maximum possible speed. Our target
+                platform, AWS p5 instances, offers an impressive 3200 Gbps of network bandwidth through 32 network
+                cards. This article shares our journey of building a custom high-performance networking solution that
+                achieves 97.1% of this theoretical bandwidth.
+            </p>
+            <h2 class="h2">
+                The Technical Challenge </h2>
+            <p class="desc">Our use case presented several key technical requirements:
+            </p>
+            <ul>
+                <li>
+                    <p class="desc">High-bandwidth transfer between remote GPUs of non-contiguous memory chunks
+                        Ability to dynamically add or remove nodes from Kubernetes deployments without disrupting
+                        ongoing operations
+                    </p>
+                </li>
+                <li>
+                    <p class="desc"><strong>
+                            Support for peer-to-peer communication patterns
+                        </strong>
+                    </p>
+                    <p class="desc">
+                        While NVIDIA's NCCL library is the de facto standard for distributed deep learning, it
+                        wasn't
+                        ideal for our use case:
+                    </p>
+                </li>
+                <p class="desc">NCCL excels at collective communication but requires establishing a static "world",
+                    which requires restarting the entire cluster when adjusting the participating nodes.
+                </p>
+                <p class="desc">NCCL's synchronous communication model adds complexity for our asynchronous workload
+                    knowledge.</p>
+                <li>
+                    <p class="desc">We wanted direct control over our memory transfer patterns for optimization
+                    </p>
+                </li>
+                <li>
+                    <p class="desc">Building our own solution provided valuable learning opportunities
+                    </p>
+                </li>
+            </ul>
+            <h2 class="h2">
+                Modern High-Performance Networks
+            </h2>
+            <p class="desc">
+                To understand our solution, let's first explore how modern high-performance networks differ from
+                traditional networking.
+            </p>
+            <p class="desc">
+                Most networks we use daily rely on TCP/IP protocols, where applications communicate with the network
+                card through the operating system kernel using sockets. However, high-performance networks use RDMA
+                (Remote Direct Memory Access) - a completely different hardware and software stack that enables
+                direct
+                memory access between machines without involving the CPU
+            </p>
+            <p class="desc">
+                AWS provides Elastic Fabric Adapter (EFA), a custom network interface that implements Amazon's
+                custom
+                protocol called Scalable Reliable Datagram (SRD). Unlike traditional TCP/IP networking where data
+                must
+                be copied multiple times between user space, kernel space, and network buffers, EFA with RDMA allows
+                direct data transfer between GPU memory and the network card, bypassing the CPU entirely.
+            </p>
+            <h2 class="h2">
+                Philosophy of High-Performance Network Design
+            </h2>
+            <p class="desc">
+                Building high-performance networking systems requires rethinking several fundamental assumptions:
+            </p>
+            <img class="techno" src="imgs/techno.img1.avif" alt="">
+            <p class="desc">
+                Under each PCIe switch, we find:
+            </p>
+            <p class="desc">
+                The data paths for TCP/IP and RDMA transfers demonstrate fundamental differences in their
+                approaches:
+            </p>
+            <img class="techno" src="imgs/techno2.avif" alt="">
+            <p class="desc">
+                With TCP/IP (left side), data must be copied multiple times:
+            </p>
+            <span>1. From GPU memory to application buffer in user space
+            </span>
+            <span>2. From GPU memory to application buffer in user space
+            </span>
+            <span>3. From GPU memory to application buffer in user space
+            </span>
+            <span>4. From GPU memory to application buffer in user space
+            </span>
+            <p class="desc">
+                Each copy operation consumes CPU cycles and memory bandwidth. The application must also context
+                switch
+                between user space and kernel space for each network operation.
+            </p>
+            <p class="desc">
+                In contrast, RDMA (right side) provides true zero-copy data transfer:
+            </p>
+            <span>
+                1. The network card reads directly from GPU memory
+            </span>
+            <span>
+                2.Data travels directly to the remote network card
+            </span>
+            <span>
+                3. Remote network card writes directly to the destination GPU memory
+            </span>
+            <span>
+                4. The application only needs to check a completion queue (CQ) in user space to know when the
+                transfer
+                is done
+            </span>
+            <p class="desc">
+                With RDMA and proper hardware pairing, transferring data between two GPUs only requires traversing
+                the
+                local PCIe switch and the network:
+            </p>
+            <img class="techno" src="imgs/techno3.avif" alt="">
+            <p class="desc">
+                In contrast, TCP/IP transfers must copy data multiple times through main memory, causing significant
+                PCIe bus congestion:
+            </p>
+            <img class="techno" src="imgs/techno4.avif" alt="">
+            <h2 class="h3">
+                Building with libfabric
+            </h2>
+            <p class="desc">
+                We used libfabric - a framework that provides a generic interface for fabric services. Our
+                implementation uses two types of RDMA operations:
+            </p>
+            <h2 class="h3">
+                Journey to Peak Performance
+            </h2>
+            <p class="desc">
+                Our development progressed through several stages:
+            </p>
+            <span>
+                1. Implemented basic unidirectional message transfer using SEND/RECV
+            </span>
+            <span>
+                2. Extended to bidirectional communication
+            </span>
+            <span>
+                3. SEND/RECVAdded GPUDirect RDMA WRITE for direct GPU-GPU transfer
+            </span>
+            <span>
+                4. Expanded to handle multiple concurrent transfers
+            </span>
+            <span>
+                5. Introduced operation queuing for robustness
+            </span>
+            <span>
+                6. Achieved 97.4% bandwidth utilization on a single network card
+            </span>
+            <p class="desc">
+                When scaling to 32 network cards, we implemented several crucial optimizations:
+            </p>
+            <video class="techno" src="imgs/technovid.mp4" muted autoplay loop></video>
+            <h2 class="h2">
+                Conclusion
+            </h2>
+            <p class="desc">
+                Building a high-performance networking system requires understanding both hardware architecture and
+                system design principles. While libraries like NCCL provide excellent solutions for common patterns,
+                sometimes custom solutions are necessary for specific requirements.
+            </p>
+            <p class="desc">
+                Our journey demonstrates that achieving near-theoretical network performance is possible with
+                careful
+                attention to system architecture, hardware topology, and various optimization techniques. The key is
+                not
+                just understanding individual components, but how they interact to form a complete system.
+            </p>
+            <p class="desc">
+                The full technical deep-dive of this journey, including implementation details and code examples, is
+                available in our <strong class="str">
+                    open source repository.
+                </strong>
+            </p>
+        </div>
+    </section>
+    <!-- footer  -->
+    <footer>
+        <div class="footer">
+            <div class="main-fot">
+                <div class="footer-box">
+                    <h4>company</h4>
+                    <a href="#">careers</a>
+                    <a href="">press inquries</a>
+                    <a href="">brand guidline</a>
+                    <a href="">supply store</a>
+                    <a href="">security</a>
+                    <a href="">term l consition</a>
+                </div>
+                <div class="footer-box">
+                    <h4>Product</h4>
+                    <a href="#">Desktop App</a>
+                    <a href="">iphone press</a>
+                    <a href="">android apps</a>
+                    <a href="">search campions</a>
+                    <a href="">
+                        Default Search</a>
+                </div>
+                <div class="footer-box">
+                    <h4>Resources</h4>
+                    <a href="#">Getting Started
+                    </a>
+                    <a href="">Help Center
+                    </a>
+                    <a href="">Changelog
+                    </a>
+                    <a href="">Give Feedback
+                    </a>
+                </div>
+                <div class="footer-box">
+                    <h4>PPLX-API Overview
+                    </h4>
+                    <a href="#">Online LLMs
+                    </a>
+                    <a href="">Playground</a>
+                    <a href="">API Documentation
+                    </a>
+                    <a href="">API FAQs
+                    </a>
+                    <a href="">API Terms of Service
+                    </a>
+                </div>
+                <div class="footer-box">
+                    <h4>FOLLOW US
+                    </h4>
+                    <a href="#">X (Twitter)
+                    </a>
+                    <a href="">Podcast
+                    </a>
+                    <a href="">Discord
+                    </a>
+                    <a href="">Linkedin
+                    </a>
+                    <a href="">YouTube
+                    </a>
+                </div>
+                <div class="footer-box  ">
+                    <div class="google">
+                        <a href="https:appstore.com"> <img src="imgs/store.svg" alt="">
+                        </a>
+                        <a href="https:googleplay.com"> <img src="imgs/google.svg" alt=""></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="last">
+            <img src="imgs/lastimg.png" alt="lang">
+            <span>© Copyright 2025 Perplexity — Where Knowledge Begins</span>
+        </div>
+    </footer>
+       <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+
+</body>
+
+</html>
